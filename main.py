@@ -9,7 +9,9 @@ with zipfile.ZipFile(apk_path, "r") as apk:
     for file in files:
         if file.endswith("libil2cpp.so"):
             print("Found libil2cpp.so:", file)
+            apk.extract(file, path="output")
 
         if file.endswith("global-metadata.dat"):
             print("Found global-metadata.dat:", file)
+            apk.extract(file, path="output")
             

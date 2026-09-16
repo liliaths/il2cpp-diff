@@ -13,8 +13,19 @@ with zipfile.ZipFile(apk_path, "r") as apk:
             size = os.path.getsize(os.path.join("output", file))
             print("Byte Size of libil2cpp.so:", size, "Found libil2cpp.so:", file)
 
+            with open(os.path.join("output", file), "rb") as f:
+                headerBytes = f.read(4)
+                print("Header Bytes of libil2cpp.so:", headerBytes)
+                if headerBytes == b'\x7fELF':
+                    print("libil2cpp.so is a valid ELF file.")
+
         if file.endswith("global-metadata.dat"):
             apk.extract(file, path="output")
             size = os.path.getsize(os.path.join("output", file))
             print("Byte Size of global-metadata.dat:", size, "Found global-metadata.dat:", file)
             
+            with open(os.path.join("output", file), "rb") as f:
+                headerBytes = f.read(4)
+                print("Header Bytes of global-metadata.dat:", headerBytes)
+                if headerBytes == b'\xaf\x1b\xb1\xfa':
+                    print("global-metadata.dat is a valid metadata file.")

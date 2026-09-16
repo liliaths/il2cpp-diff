@@ -9,3 +9,4 @@ venv/
 samples/
 output/
 test_app/
+test_app_invalid/

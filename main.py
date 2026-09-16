@@ -35,6 +35,18 @@ with zipfile.ZipFile(apk_path, "r") as apk:
                     nextFourBytes = f.read(4)
                     metaDataVersion = int.from_bytes(nextFourBytes, byteorder='little')
                     print("Metadata Version of global-metadata.dat:", metaDataVersion)
+
+                    nextFourBytes = f.read(4)
+                    offset = int.from_bytes(nextFourBytes, byteorder='little')
+                    print("Offset of global-metadata.dat:", offset)
+
+                    nextFourBytes = f.read(4)
+                    size = int.from_bytes(nextFourBytes, byteorder='little')
+                    print("Section Size of global-metadata.dat:", size)
+
+                    f.seek(offset)
+                    output = f.read(5)
+                    print("First 5 bytes of the section:", output)
                 else:
                     print("global-metadata.dat is not a valid metadata file.")
 

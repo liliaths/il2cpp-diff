@@ -18,6 +18,8 @@ with zipfile.ZipFile(apk_path, "r") as apk:
                 print("Header Bytes of libil2cpp.so:", headerBytes)
                 if headerBytes == b'\x7fELF':
                     print("libil2cpp.so is a valid ELF file.")
+                else:
+                    print("libil2cpp.so is not a valid ELF file.")
 
         if file.endswith("global-metadata.dat"):
             apk.extract(file, path="output")
@@ -29,3 +31,10 @@ with zipfile.ZipFile(apk_path, "r") as apk:
                 print("Header Bytes of global-metadata.dat:", headerBytes)
                 if headerBytes == b'\xaf\x1b\xb1\xfa':
                     print("global-metadata.dat is a valid metadata file.")
+                    
+                    nextFourBytes = f.read(4)
+                    metaDataVersion = int.from_bytes(nextFourBytes, byteorder='little')
+                    print("Metadata Version of global-metadata.dat:", metaDataVersion)
+                else:
+                    print("global-metadata.dat is not a valid metadata file.")
+
